@@ -9,7 +9,7 @@ const app = express();
 // Mongo Db connection
 // const connectURL = "mongodb://localhost:27017/blogHomie";
 const connectURI = process.env.MONGODB_URI;
-mongoose.connect(connectURL)
+mongoose.connect(connectURI)
     .then(
         console.log("[Status] Connection Succesfull")
     )
