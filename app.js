@@ -7,9 +7,9 @@ const { Schema } = mongoose;
 const app = express();
 
 // Mongo Db connection
-const connectURL = "mongodb+srv://render:L4zZ4LKVu5llBFzG@cluster0.gwwyia0.mongodb.net/blogHomie";
+// const connectURL = "";
 const connectURI = process.env.MONGODB_URI;
-mongoose.connect(connectURL)
+mongoose.connect(connectURI)
     .then(
         console.log("[Status] Connection Succesfull")
     )
