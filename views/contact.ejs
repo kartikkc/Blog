@@ -1,0 +1,24 @@
+<%- include("partials/header") -%>
+    <section id="Landing">
+        <!-- landing div -->
+        <div class="main-div">
+            <!-- featured blog section -->
+            <h1 class="featured mt-5">Contact-Us</h1>
+        </div>
+        <form class="mb-5" action="/contact" method="post">
+            <div class="mb-3 mt-5">
+                <label for="Name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="Name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="Email" name="email" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="Message" class="form-label">Message</label>
+                <textarea class="form-control" id="Message" rows="3" name="message" placeholder="Your message Here..."></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Publish</button>
+        </form>
+    </section>
+    <%- include("partials/footer") -%>

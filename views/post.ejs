@@ -1,0 +1,20 @@
+<%- include("partials/header") -%>
+    <section id="Landing">
+        <!-- landing div -->
+                <div class="main-div">
+                    <!-- featured blog section -->
+                    <h1 class="featured mt-5">
+                        <%= postTitle %>
+                    </h1>
+                    <h6 class="m-1 p-1 landing-p">
+                        <%= dateAndDay%>
+                    </h6>
+                </div>
+                <div class="col col-lg-12 col-md-12 col-sm-12 mb-2 p-2">
+                    <p class="landing-p p-2">
+                        <%= postBody %>
+                    </p>
+                </div>
+    </section>
+    <div class="mb-4 p-4"></div>
+    <%- include("partials/footer") -%>
