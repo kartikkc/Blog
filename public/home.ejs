@@ -1,0 +1,44 @@
+<%- include("partials/header") -%>
+
+    <!-- Landing Section -->
+    <section id="Landing">
+        <!-- landing div -->
+        <div class="main-div">
+            <!-- featured blog section -->
+            <h1 class="featured mt-5">Home</h1>
+            <h3 class="featured mt-5">Blog of the day</h3>
+            <div class="featured-container mt-5">
+                <a href="/">
+                    <img class="main-img" src="images/blog-1.jpg" alt="featured-blog" srcset="">
+                    <div class="blog-title">
+                        <h1 class="landing-h1">
+                            <%= postContent[0].title %>
+                        </h1>
+                        <h6 class="landing-p">
+                            <%= dateAndDay%>
+                        </h6>
+                    </div>
+                </a>
+            </div>
+            <!-- featured blog section ends -->
+    </section>
+    <section id="posts">
+        <div class="main-div row">
+            <% for (var i=1; i < postContent.length ; i++) { %>
+                    <div class="col col-lg-4 col-md-6 col-sm-12">
+                        <h1 class="mt-5 pt-5 featured">
+                            <%= postContent[i].title %>
+                        </h1>
+                        <h6 class="m-1 p-1 landing-p">
+                            <%= dateAndDay%>
+                        </h6>
+                        <p class="landing-p p-2">
+                            <%= postContent[i].content.substr(0, 200) %>...<a href="/post/<%= postContent[i].title %>">read
+                                    more</a>
+                        </p>
+                    </div>
+                        <% } %>
+        </div>
+    </section>
+    <div class="mb-5"></div>
+    <%- include("partials/footer") -%>

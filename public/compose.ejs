@@ -1,0 +1,19 @@
+<%- include("partials/header") -%>
+    <section id="Landing">
+        <!-- landing div -->
+        <div class="main-div">
+            <h1 class="featured mt-5">Compose</h1>
+        </div>
+        <form class="mb-5" action="/compose" method="post">
+            <div class="mb-3 mt-5">
+                <label for="Title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="Title" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="Post" class="form-label">Post</label>
+                    <textarea class="form-control" id="Post" rows="3" name="content"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Publish</button>
+        </form>
+    </section>
+    <%- include("partials/footer") -%>
