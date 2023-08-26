@@ -5,12 +5,17 @@ const ejs = require("ejs");
 const lodash = require("lodash");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const session = require("express-session");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const findOrCreate = require("mongoose-findorcreate");
+
 const app = express();
 
 // Mongo Db connection
-// const connectURL = "";
-const connectURI = process.env.MONGODB_URI;
-mongoose.connect(connectURI, { useNewUrlParser: true, useUnifiedTopology: true })
+const connectURL = "mongodb://localhost:27017/blogHomie";
+// const connectURI = process.env.MONGODB_URI;
+mongoose.connect(connectURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(
         console.log("[Status] Connection Succesfull")
     )
@@ -26,6 +31,13 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 // app.set("views", "views");
 app.set("views", __dirname + "/views");
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Blog Schema definiton and new model creation
 const blogSchema = {
@@ -34,6 +46,13 @@ const blogSchema = {
 }
 
 const Blog = mongoose.model("Blog", blogSchema);
+const userSchema = mongoose.Schema({
+    googleId: String
+});
+userSchema.plugin(findOrCreate);
+
+
+const User = mongoose.model("User", userSchema);
 
 const messageSchema = {
     Name: String,
@@ -72,7 +91,38 @@ Blog.find().then(Blogs => {
     }
 });
 
+passport.serializeUser(function (user, cb) {
+    process.nextTick(function () {
+        return cb(null, {
+            id: user.id,
+            username: user.username,
+            picture: user.picture
+        });
+    });
+});
 
+passport.deserializeUser(function (user, cb) {
+    process.nextTick(function () {
+        return cb(null, user);
+    });
+});
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/compose",
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+},
+    function (accessToken, refreshToken, profile, cb) {
+        // console.log(profile);
+        User.findOne({ googleId: profile.id })
+            .then((user) => {
+                return cb(null, user);
+            })
+            .catch((err) => {
+                return cb(err, null);
+            });
+    }
+));
 // Contact-Us from collection
 
 let messages = [];
@@ -94,10 +144,25 @@ app.get("/contact", (req, res) => {
 })
 
 app.get("/compose", (req, res) => {
-    res.render("compose");
+    if (req.isAuthenticated()) {
+        res.render("compose");
+    } else {
+        res.redirect("/login");
+    }
 })
 
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+app.get("/auth/google", passport.authenticate('google', { scope: ["profile"] }));
+
+app.get("/auth/google/compose", passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+        res.redirect("/compose");
+    }
+);
 app.post("/compose", (req, res) => {
+
     const post = {
         title: req.body.title,
         content: req.body.content
