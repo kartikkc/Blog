@@ -1,7 +1,6 @@
 # Blog Homie
 
-A webiste to read and publish blog and connect to the people and build the community.!
-
+Your Voice, Your Story, Our Platform: Empowering Bloggers
 <img src="https://raw.githubusercontent.com/kartikkc/Blog/main/public/images/logo.png" width="100"/>
 
 
