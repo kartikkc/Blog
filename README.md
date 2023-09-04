@@ -2,7 +2,7 @@
 
 A webiste to read and publish blog and connect to the people and build the community.!
 
-<img src="https://raw.githubusercontent.com/kartikkc/Blog/main/public/images/logo.png" width="48"/>
+<img src="https://raw.githubusercontent.com/kartikkc/Blog/main/public/images/logo.png" width="100"/>
 
 
 
